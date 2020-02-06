@@ -1,10 +1,26 @@
 """ Vertically merge tab-delimited and/or comma-delimited (CSV) text files.
 
 Vertically merges all text files in a given directory. Can be a combination 
-of tab-delimited and comma-delimeted text files. Resulting file can be tab- 
-or comma-delimited regardless of the type of files that were merged.
+of tab-delimited and comma-delimeted text files. Resulting file can be made 
+tab-delimited or comma-delimited regardless of the type of files that were 
+merged.
 
+Usage:
 
+python merge-text-files.py in-path out-path [--csv] [--no_headers] [--file_col]
+
+Typical Usage Example:
+
+python merge-text-files.py folder-with-files merged-file.txt
+
+Positional Arguments:
+in_path      Path to directory containing text files.
+out_path     Output file name.
+
+Optional Arguments:
+--csv         Make output file comma-delimited (CSV) instead of tab-delimited.
+--no_headers  Use if input files do not have headers.
+--file_col    Add to output file a column containing paths to input files.
 """
 
 import argparse
@@ -36,18 +52,19 @@ class FileMerger:
                 or CSV) in a given directory.'
         parser = argparse.ArgumentParser(description=desc)
         parser.add_argument('in_path', 
-                            help='path to directory containing text files')
+                            help='Path to directory containing text files.')
         parser.add_argument('out_path', 
-                            help='Output file name')
+                            help='Output file name.')
         parser.add_argument('--csv', 
-                            help='Make output comma-delimited (CSV)', 
+                            help='Make output file comma-delimited (CSV) \
+                                instead of tab-delimited.', 
                             action='store_true')
         parser.add_argument('--no_headers', 
-                            help='Use if input files do not have headers',
+                            help='Use if input files do not have headers.',
                             action='store_true')                               
         parser.add_argument('--file_col', 
-                            help='Add column with file paths to the output \
-                                  file', 
+                            help='Add to output file a column with paths to \
+                                input files.', 
                             action='store_true')                  
         args = parser.parse_args()
         if(not os.path.isdir(args.in_path)):
