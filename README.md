@@ -9,11 +9,15 @@ merged.
 
 ## Usage:
 
+```
 python merge-text-files.py in-path out-path [--csv] [--no_headers] [--file_col]
+```
 
 ## Typical Usage Example:
 
+```
 python merge-text-files.py folder-with-files merged-file.txt
+```
 
 ## Positional Arguments:
 <pre>
