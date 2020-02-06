@@ -16,13 +16,17 @@ python merge-text-files.py in-path out-path [--csv] [--no_headers] [--file_col]
 python merge-text-files.py folder-with-files merged-file.txt
 
 ## Positional Arguments:
-**in_path**      Path to directory containing text files.
+<pre>
+in_path      Path to directory containing text files.
 
-**out_path**     Output file name.
+out_path     Output file name.
+</pre>
 
 ## Optional Arguments:
-**--csv**         Make output file comma-delimited (CSV) instead of tab-delimited.
+<pre>
+--csv         Make output file comma-delimited (CSV) instead of tab-delimited.
 
-**--no_headers**  Use if input files do not have headers.
+--no_headers  Use if input files do not have headers.
 
-**--file_col**    Add to output file a column containing paths to input files.
+--file_col    Add to output file a column containing paths to input files.
+</pre>
