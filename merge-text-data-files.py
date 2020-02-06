@@ -1,7 +1,7 @@
 """ Vertically stack all text data files (either tab-delimited or CSV) in a
 given directory.
 
-Assumes the first row of each file contains the column headings. Skips this 
+Assumes the first row of each file contains the column headings. Skips this
 row for all but the first file added to the output file.
 
 """
@@ -9,6 +9,7 @@ row for all but the first file added to the output file.
 import argparse
 import glob
 import os
+
 
 class FileMerger:
 
@@ -53,8 +54,8 @@ class FileMerger:
         file_paths = (glob.glob(os.path.join(dir_path, '*.txt')) + 
                       glob.glob(os.path.join(dir_path, '*.csv')))
         print('Found {} files to process'.format(str(len(file_paths))))
-        return(file_paths)        
-
+        return file_paths 
+        
     def _process_file(self, file_path, index):
         print('Processing {}'.format(file_path))
         file = open(file_path, 'r')
@@ -65,17 +66,28 @@ class FileMerger:
                 if index > 0:
                     pass
                 else:
-                    out_row = self._process_row(in_row)
+                    out_row = self._process_row(in_row, file_path, True)
+                    self.out_file.write(out_row)
             else:
-                print(in_row)
+                out_row = self._process_row(in_row, file_path, False)
+                self.out_file.write(out_row)
         file.close()        
 
-    def _process_row(self, in_row):
-        pass
+    def _process_row(self, in_row, file_path, header):
+        in_delim = ',' if file_path.find(".csv") >= 0 else '\t'
+        out_row = in_row.split(in_delim)
+        if self.file_col:
+            if header:
+                out_row = self.out_delim.join(out_row).strip()
+                out_row = out_row + self.out_delim + 'file_path\n'
+            else:
+                out_row = self.out_delim.join(out_row).strip()
+                out_row = out_row + self.out_delim + file_path + '\n'             
+        else:
+            out_row = '{}\n'.format(self.out_delim.join(out_row).strip())
+        return out_row
 
-def main():
-    fm = FileMerger()
-    fm.process_files()
 
 if __name__ == '__main__':
-    main()
+    fm = FileMerger()
+    fm.process_files()

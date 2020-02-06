@@ -1,0 +1,7 @@
+header_1,header_2,file_path
+file-1 11,file-1 21,test-dir/file-1.txt
+file-1 12,file-1 22,test-dir/file-1.txt
+file-2 11,file-2 21,test-dir/file-2.txt
+file-2 12,file-2 22,test-dir/file-2.txt
+file-3 11,file-3 21,test-dir/file-3.csv
+file-3 12,file-3 22,test-dir/file-3.csv
