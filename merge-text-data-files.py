@@ -10,16 +10,14 @@ import argparse
 import glob
 import os
 
-class NoDirectoryError(Exception):
-    pass
-
 class FileMerger:
 
     def __init__(self):
         try:
             self.args = self._get_args()
-        except NoDirectoryError as e:
+        except FileNotFoundError as e:
             print(e)
+            raise SystemExit
         self.out_delim = ',' if(self.args.csv) else '\t'
         self.file_col = True if(self.args.file_col) else False
         self.file_paths = self._get_file_paths(self.args.in_path)
@@ -41,24 +39,24 @@ class FileMerger:
         parser.add_argument('--csv', 
                             help='make output CSV', 
                             action='store_true')
-        parser.add_argument('--file_col', help='add column with file names to \
-                            the output file', action='store_true')                    
+        parser.add_argument('--file_col', help='add column with file names \
+                            to the output file', action='store_true')                    
         args = parser.parse_args()
         if(not os.path.isdir(args.in_path)):
-            raise NoDirectoryError('unable to find directory: ' + 
-                                   str(args.in_path))
+            raise FileNotFoundError('Unable to find directory: {}'
+                                    .format(args.in_path))
         else:
             return(args)
 
     def _get_file_paths(self, dir_path):
-        print('looking for text files in ' +  dir_path)    
+        print('Looking for text files in ' +  dir_path)    
         file_paths = (glob.glob(os.path.join(dir_path, '*.txt')) + 
                       glob.glob(os.path.join(dir_path, '*.csv')))
-        print('found ' + str(len(file_paths)) + ' files to process')
+        print('Found {} files to process'.format(str(len(file_paths))))
         return(file_paths)        
 
     def _process_file(self, file_path, index):
-        print('processing ' + file_path)
+        print('Processing {}'.format(file_path))
         file = open(file_path, 'r')
         first_row = True
         for in_row in file:
