@@ -16,7 +16,7 @@ python merge-text-files.py in-path out-path [--csv] [--no_headers] [--file_col]
 python merge-text-files.py folder-with-files merged-file.txt
 
 ## Positional Arguments:
-***in_path**      Path to directory containing text files.
+**in_path**      Path to directory containing text files.
 
 **out_path**     Output file name.
 
